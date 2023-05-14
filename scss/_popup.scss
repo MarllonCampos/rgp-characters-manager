@@ -1,0 +1,63 @@
+@import "variables";
+
+
+.popup {
+    position: absolute;
+    inset: 0;
+    padding: 3rem;
+    display: none; 
+    width: 100dvw;
+    height: 100vh;
+    background: rgba(39, 53, 77, 0.7);
+    backdrop-filter: blur(2px);
+
+    &--active {
+        display: block;
+    }
+    &__title { 
+        text-align: center;
+        margin-bottom: 0.75rem;
+    }
+
+    &__add-character {
+        margin-top: 0.875rem;
+    
+        &_input {
+            display: none;
+        }
+    
+        &_input-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75em;
+            border-radius: 0.750em;
+            border: 2px solid $text-color;
+            padding: 0.5em 0.75em;
+            color: $text-color;
+            cursor: pointer;
+            transition: background-color 0.2s linear, color 0.2s linear ;
+    
+            &:hover {
+                background-color: $text-color;
+                color: $blue-color;
+            }
+        }
+
+    }
+
+    &__input-container {
+        display: flex;
+        align-items: center;
+        label {
+            margin-right: .75rem;
+            margin-left: .25rem;
+            font-family: "Special Elite";
+            line-height: 4px;
+        }
+        margin: .75rem 0;
+
+        &-input { 
+            padding: 20px 0;
+        }
+    }
+}

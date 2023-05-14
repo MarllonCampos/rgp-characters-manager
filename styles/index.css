@@ -1,0 +1,103 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background: #27354D;
+  color: #EEE;
+  font-family: "QuickSand";
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Special Elite";
+}
+
+.main-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  padding: 3rem 0 0.5rem;
+}
+.main-container__add-character {
+  margin: 0.5em 0;
+}
+.main-container__add-character__button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 0;
+}
+
+.popup {
+  position: absolute;
+  inset: 0;
+  padding: 3rem;
+  display: none;
+  width: 100dvw;
+  height: 100vh;
+  background: rgba(39, 53, 77, 0.7);
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+}
+.popup--active {
+  display: block;
+}
+.popup__title {
+  text-align: center;
+  margin-bottom: 0.75rem;
+}
+.popup__add-character {
+  margin-top: 0.875rem;
+}
+.popup__add-character_input {
+  display: none;
+}
+.popup__add-character_input-label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 0.75em;
+  border-radius: 0.75em;
+  border: 2px solid #EEE;
+  padding: 0.5em 0.75em;
+  color: #EEE;
+  cursor: pointer;
+  -webkit-transition: background-color 0.2s linear, color 0.2s linear;
+  transition: background-color 0.2s linear, color 0.2s linear;
+}
+.popup__add-character_input-label:hover {
+  background-color: #EEE;
+  color: #27354D;
+}
+.popup__input-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0.75rem 0;
+}
+.popup__input-container label {
+  margin-right: 0.75rem;
+  margin-left: 0.25rem;
+  font-family: "Special Elite";
+  line-height: 4px;
+}
+.popup__input-container-input {
+  padding: 20px 0;
+}
