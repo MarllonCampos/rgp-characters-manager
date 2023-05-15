@@ -6,12 +6,17 @@
 }
 
 body {
-  background: #27354D;
-  color: #EEE;
+  background: #27354d;
+  color: #eee;
   font-family: "QuickSand";
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Special Elite";
 }
 
@@ -50,12 +55,41 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-backdrop-filter: blur(2px);
           backdrop-filter: blur(2px);
 }
+.popup__close {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  cursor: pointer;
+  -webkit-transition: fill 0.3s linear;
+  transition: fill 0.3s linear;
+}
+.popup__close:hover {
+  fill: #d15f3c;
+}
 .popup--active {
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 .popup__title {
   text-align: center;
   margin-bottom: 0.75rem;
+}
+.popup__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 .popup__add-character {
   margin-top: 0.875rem;
@@ -72,16 +106,19 @@ h1, h2, h3, h4, h5, h6 {
           align-items: center;
   gap: 0.75em;
   border-radius: 0.75em;
-  border: 2px solid #EEE;
+  border: 2px solid #eee;
   padding: 0.5em 0.75em;
-  color: #EEE;
+  margin: 0 auto;
+  border-radius: 0.75em;
+  border: 2px solid currentColor;
+  color: currentColor;
   cursor: pointer;
   -webkit-transition: background-color 0.2s linear, color 0.2s linear;
   transition: background-color 0.2s linear, color 0.2s linear;
 }
 .popup__add-character_input-label:hover {
-  background-color: #EEE;
-  color: #27354D;
+  background-color: #eee;
+  color: #27354d;
 }
 .popup__input-container {
   display: -webkit-box;
@@ -98,6 +135,26 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Special Elite";
   line-height: 4px;
 }
-.popup__input-container-input {
-  padding: 20px 0;
+.popup__input-container__input {
+  padding: 0.25rem 0.75rem;
+  font-size: 1rem;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+.popup__preview-image {
+  aspect-ratio: 1/1;
+  max-height: 300px;
+  max-width: 300px;
+  margin: 2rem auto;
+  display: block;
+  border-radius: 1rem;
+}
+.popup__submit {
+  padding: 1rem 0;
+  font-size: 1.75rem;
+  font-family: "Special Elite";
+  cursor: pointer;
+  border-radius: 0.75rem;
+  margin-top: auto;
 }
