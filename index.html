@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Special+Elite&display=swap"
       rel="stylesheet"
     />
+    <script src="scripts/characters.js"></script>
     <link rel="stylesheet" href="styles/index.css" />
     <title>RPG</title>
   </head>
@@ -88,13 +89,13 @@
       </svg>
 
       <h2 class="popup__title">Criar personagem</h2>
-      <form class="popup__form">
+      <form class="popup__form" id="character-form">
         <div class="popup__input-container">
           <label for="name" class="popup__input-container__input-label">Name:</label>
-          <input class="popup__input-container__input" id="name" />
+          <input class="popup__input-container__input" id="name" required/>
         </div>
         <div class="popup__input-container">
-          <input type="radio" name="category" id="player" checked value="player" />
+          <input type="radio" name="category" id="player" checked value="player" required/>
           <label for="player">Jogador</label>
           <input type="radio" name="category" id="monster" value="monster" />
           <label for="monster">Monstro</label>
@@ -156,9 +157,9 @@
       <h2>Jogadores</h2>
     </section>
 
-    <sections class="mobs">
-      <h2>Monstros</h2>
-    </sections>
+    <section class="mobs">
+        <h2>Monstros</h2>
+    </section>
 
     <script src="scripts/index.js" defer></script>
   </body>
