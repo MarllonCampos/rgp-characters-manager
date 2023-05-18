@@ -5,11 +5,18 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+html,body {
+    height: 100%;
+}
 body {
-  background: $blue-color;
-  color: $text-color;
-  font-family: "QuickSand";
+    background: $blue-color;
+    color: $text-color;
+    font-family: 'QuickSand';
+    padding: 0 2rem;
+}
+
+section:not(.popup) {
+    margin-top: 24px;
 }
 
 h1,

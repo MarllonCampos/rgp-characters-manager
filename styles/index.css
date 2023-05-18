@@ -5,10 +5,19 @@
           box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   background: #27354d;
   color: #eee;
   font-family: "QuickSand";
+  padding: 0 2rem;
+}
+
+section:not(.popup) {
+  margin-top: 24px;
 }
 
 h1,
@@ -144,8 +153,8 @@ h6 {
 }
 .popup__preview-image {
   aspect-ratio: 1/1;
-  max-height: 300px;
-  max-width: 300px;
+  max-height: 150px;
+  max-width: 150px;
   margin: 2rem auto;
   display: block;
   border-radius: 1rem;
