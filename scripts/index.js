@@ -1,52 +1,59 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const characterInput = document.getElementById('image');
+  characterInput.onchange = getImageFromInput;
 
-document.addEventListener("DOMContentLoaded", () => {
-    const characterInput = document.getElementById("image")
-    characterInput.onchange = getImageFromInput;
+  const addCharacter = document.getElementById('add-character');
+  addCharacter.onclick = showPopUp;
 
-    const addCharacter = document.getElementById("add-character")
-    addCharacter.onclick = showPopUp
+  const characterForm = document.getElementById('character-form');
+  characterForm.onsubmit = submitForm;
 
-    const characterForm = document.getElementById("character-form")
-    characterForm.onsubmit = submitForm
+  const addImage = document.getElementById('label-for-image');
+  addImage.onclick = callsAddImage;
+});
 
-})
+function callsAddImage() {
+  const characterInput = document.getElementById('image');
+
+  characterInput.click();
+}
 
 function submitForm(event) {
-    event.preventDefault();
-    const image = document.getElementById("preview-image").src
-    if(!image) return alert("Personagem deve ter uma imagem")
-    const elements = event.target.elements
-    const name = elements.name.value
-    const type = Array.from(elements.category).find(category => category.checked).value
-    const character = new Character();
-    character.create({name,type,image,index: 0})
-    
+  event.preventDefault();
+  const image = document.getElementById('preview-image').src;
+  if (!image) return alert('Personagem deve ter uma imagem');
+  const elements = event.target.elements;
+  const name = elements.name.value;
+  const type = Array.from(elements.category).find((category) => category.checked).value;
+  const character = new Character();
+  character.create({ name, type, image, index: 0 });
 }
 
 function getImageFromInput(event) {
-    const file = event.target.files[0]
-    const popup = document.querySelector(".popup")
+  const file = event.target.files[0];
+  const popup = document.querySelector('.popup');
 
-    const reader = new FileReader()
-    reader.readAsDataURL(file);
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
 
-    reader.onloadend = (loadEndEvent) => {
-        const img = popup.querySelector("#preview-image")
-        img.src = loadEndEvent.target.result
-    }
+  reader.onloadend = (loadEndEvent) => {
+    const img = popup.querySelector('#preview-image');
+    img.src = loadEndEvent.target.result;
+  };
 }
 function showPopUp() {
-    const popup = document.getElementsByClassName("popup")[0]
-    popup.classList.add("popup--active")
+  const popup = document.getElementsByClassName('popup')[0];
+  popup.classList.add('popup--active');
+  document.body.classList.add('.overflow-hidden');
 }
 
-window.addEventListener("keydown", (event) => {
-    if (event.key != "Escape") return
-    closePopUp()
-})
-
+window.addEventListener('keydown', (event) => {
+  if (event.key != 'Escape') return;
+  closePopUp();
+});
 
 function closePopUp() {
-    const popup = document.querySelector(".popup")
-    popup.classList.remove("popup--active")
+  const popup = document.querySelector('.popup');
+  popup.classList.remove('popup--active');
+  document.body.classList.remove('.overflow-hidden');
 }

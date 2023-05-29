@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 .popup {
   position: absolute;
@@ -16,6 +16,8 @@
     top: 0.75rem;
     cursor: pointer;
     transition: fill 0.3s linear;
+    background-color: transparent;
+    border: 0;
     &:hover {
       fill: #d15f3c;
     }
@@ -39,26 +41,36 @@
   &__add-character {
     margin-top: 0.875rem;
 
-    &_input {
+    &__input {
       display: none;
     }
 
-    &_input-label {
+    &__input-label {
       display: flex;
       align-items: center;
       gap: 0.75em;
       border-radius: 0.75em;
       border: 2px solid $text-color;
+      width: 100%;
       padding: 0.5em 0.75em;
       margin: 0 auto;
       border-radius: 0.75em;
       border: 2px solid currentColor;
       color: currentColor;
       cursor: pointer;
+      background-color: transparent;
       transition: background-color 0.2s linear, color 0.2s linear;
-      &:hover {
+      &:hover,
+      &:focus {
         background-color: $text-color;
         color: $blue-color;
+        outline-color: $tomato-color;
+
+        border-color: transparent;
+      }
+
+      p {
+        font-size: 16px;
       }
     }
   }
@@ -69,7 +81,7 @@
     label {
       margin-right: 0.75rem;
       margin-left: 0.25rem;
-      font-family: "Special Elite";
+      font-family: 'Special Elite';
       line-height: 4px;
     }
     margin: 0.75rem 0;
@@ -93,7 +105,7 @@
   &__submit {
     padding: 1rem 0;
     font-size: 1.75rem;
-    font-family: "Special Elite";
+    font-family: 'Special Elite';
     cursor: pointer;
     border-radius: 0.75rem;
     margin-top: auto;

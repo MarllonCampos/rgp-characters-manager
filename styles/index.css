@@ -5,7 +5,8 @@
           box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -53,6 +54,15 @@ h6 {
   font-size: 0;
 }
 
+.characters:not(:has(div)),
+.mobs:not(:has(div)) {
+  display: none;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .popup {
   position: absolute;
   inset: 0;
@@ -71,6 +81,8 @@ h6 {
   cursor: pointer;
   -webkit-transition: fill 0.3s linear;
   transition: fill 0.3s linear;
+  background-color: transparent;
+  border: 0;
 }
 .popup__close:hover {
   fill: #d15f3c;
@@ -103,10 +115,10 @@ h6 {
 .popup__add-character {
   margin-top: 0.875rem;
 }
-.popup__add-character_input {
+.popup__add-character__input {
   display: none;
 }
-.popup__add-character_input-label {
+.popup__add-character__input-label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -116,18 +128,25 @@ h6 {
   gap: 0.75em;
   border-radius: 0.75em;
   border: 2px solid #eee;
+  width: 100%;
   padding: 0.5em 0.75em;
   margin: 0 auto;
   border-radius: 0.75em;
   border: 2px solid currentColor;
   color: currentColor;
   cursor: pointer;
+  background-color: transparent;
   -webkit-transition: background-color 0.2s linear, color 0.2s linear;
   transition: background-color 0.2s linear, color 0.2s linear;
 }
-.popup__add-character_input-label:hover {
+.popup__add-character__input-label:hover, .popup__add-character__input-label:focus {
   background-color: #eee;
   color: #27354d;
+  outline-color: #ff8873;
+  border-color: transparent;
+}
+.popup__add-character__input-label p {
+  font-size: 16px;
 }
 .popup__input-container {
   display: -webkit-box;
