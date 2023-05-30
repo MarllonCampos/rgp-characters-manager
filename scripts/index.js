@@ -26,7 +26,7 @@ function submitForm(event) {
   const name = elements.name.value;
   const type = Array.from(elements.category).find((category) => category.checked).value;
   const character = new Character();
-  character.create({ name, type, image, index: 0 });
+  character.create({ name, type, image });
 }
 
 function getImageFromInput(event) {
