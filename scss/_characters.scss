@@ -2,12 +2,16 @@
   display: none;
 }
 
+#mobs .characters__title {
+  color: $tomato-color;
+}
+
 .characters {
   &__title {
     margin-bottom: 1.5rem;
   }
   & + & {
-    margin-bottom: 1.5rem;
+    margin-top: 2.75rem;
   }
 
   &__character-container {

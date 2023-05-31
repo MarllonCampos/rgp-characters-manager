@@ -13,14 +13,14 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
   background: #27354d;
   color: #eee;
   font-family: "QuickSand";
-  padding: 0 2rem;
+  padding: 2rem;
 }
 
 section:not(.popup) {
@@ -72,11 +72,15 @@ h6 {
   display: none;
 }
 
+#mobs .characters__title {
+  color: #ff8873;
+}
+
 .characters__title {
   margin-bottom: 1.5rem;
 }
 .characters + .characters {
-  margin-bottom: 1.5rem;
+  margin-top: 2.75rem;
 }
 .characters__character-container {
   display: -webkit-box;
