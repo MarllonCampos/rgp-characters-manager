@@ -1,0 +1,64 @@
+.characters:not(:has(div)) {
+  display: none;
+}
+
+.characters {
+  &__title {
+    margin-bottom: 1.5rem;
+  }
+  & + & {
+    margin-bottom: 1.5rem;
+  }
+
+  &__character-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: $light-blue-color;
+    border-radius: 0.5rem;
+
+    padding: 1.5rem 1rem;
+
+    &__image-name-container {
+      display: flex;
+      align-items: center;
+      flex-direction: column-reverse;
+      justify-content: center;
+    }
+    &__image {
+      max-width: 9.375rem;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+
+    &__name {
+      text-shadow: 2px 4px 3px rgb(0, 0, 0);
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: 'Special Elite';
+      z-index: 100;
+    }
+
+    &__position-container {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+      width: 100%;
+    }
+    &__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $light-blue-color;
+      background: $text-color;
+      padding: 0.15rem;
+      border: 0;
+      font-size: 0;
+      height: 45px;
+      border-radius: 4px;
+      aspect-ratio: 1/1;
+    }
+  }
+}
