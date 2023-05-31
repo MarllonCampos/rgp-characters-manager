@@ -1,3 +1,5 @@
+const character = new Character();
+
 document.addEventListener('DOMContentLoaded', () => {
   const characterInput = document.getElementById('image');
   characterInput.onchange = getImageFromInput;
@@ -10,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const addImage = document.getElementById('label-for-image');
   addImage.onclick = callsAddImage;
+
+  character.list();
 });
 
 function callsAddImage() {
@@ -25,7 +29,6 @@ function submitForm(event) {
   const elements = event.target.elements;
   const name = elements.name.value;
   const type = Array.from(elements.category).find((category) => category.checked).value;
-  const character = new Character();
   character.create({ name, type, image });
 }
 
