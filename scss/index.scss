@@ -35,10 +35,12 @@ h6 {
   flex-direction: column;
   width: 100%;
   padding: 3rem 0 0.5rem;
-
+  h1 {
+    text-align: center;
+  }
   &__add-character {
     margin: 0.5rem 0;
-
+    text-align: center;
     &__button {
       background-color: transparent;
       border: 0;
