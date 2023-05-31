@@ -16,7 +16,7 @@ function submitForm(event) {
   const ap = elements.ap.value;
   const sanity = elements.name.value;
   const type = Array.from(elements.category).find((category) => category.checked).value;
-  const attributes = [{ maxHp: hp }, { hp }, { maxSanity: sanity }, { sanity }, { maxAp: ap }, { ap }];
+  const attributes = { maxHp: hp, hp, maxSanity: sanity, sanity, maxAp: ap, ap };
   character.create({ name, type, attributes });
   closePopUp();
 }
