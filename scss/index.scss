@@ -37,7 +37,7 @@ h6 {
   padding: 3rem 0 0.5rem;
 
   &__add-character {
-    margin: 0.5em 0;
+    margin: 0.5rem 0;
 
     &__button {
       background-color: transparent;
@@ -48,12 +48,9 @@ h6 {
   }
 }
 
-.characters:not(:has(div)),
-.mobs:not(:has(div)) {
-  display: none;
-}
 .overflow-hidden {
   overflow: hidden;
 }
 
+@import 'characters';
 @import 'popup';
