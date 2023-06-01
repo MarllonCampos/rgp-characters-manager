@@ -4,26 +4,30 @@
   inset: 0;
   padding: 3rem 1.5rem;
   display: none;
-  width: 100dvw;
   height: 100dvh;
+  width: 100dvw;
   background: rgba(39, 53, 77, 0.7);
   backdrop-filter: blur(2px);
-
-  &__close {
-    position: absolute;
-    right: 0.75rem;
-    top: 0.75rem;
-    cursor: pointer;
-    transition: fill 0.3s linear;
-    background-color: transparent;
-    border: 0;
-    &:hover {
-      fill: $accent-tomato-color;
-    }
-  }
   &--active {
     display: flex;
     flex-direction: column;
+  }
+
+  &__close {
+    position: absolute;
+    right: calc(3rem);
+    top: calc(3rem / 2);
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+
+    svg {
+      transition: fill 0.3s linear;
+
+      &:hover {
+        fill: darken($tomato-color, 10%);
+      }
+    }
   }
 
   &__title {
@@ -123,5 +127,14 @@
     border-radius: 0.75rem;
     margin-top: auto;
     border: 0;
+  }
+}
+
+@media (max-width: 470px) {
+  .popup {
+    &__close {
+      right: 0.5rem;
+      top: 0.5rem;
+    }
   }
 }
