@@ -14,9 +14,9 @@ function submitForm(event) {
   const name = elements.name.value;
   const hp = elements.hp.value;
   const ap = elements.ap.value;
-  const sanity = elements.name.value;
+  const sanity = elements.sanity.value;
   const type = Array.from(elements.category).find((category) => category.checked).value;
-  const attributes = { maxHp: hp, hp, maxSanity: sanity, sanity, maxAp: ap, ap };
+  const attributes = { maxHp: hp, hp, maxAp: ap, ap, maxSanity: sanity, sanity };
   character.create({ name, type, attributes });
   closePopUp();
 }
@@ -24,7 +24,7 @@ function submitForm(event) {
 function showPopUp() {
   const popup = document.getElementsByClassName('popup')[0];
   popup.classList.add('popup--active');
-  document.body.classList.add('.overflow-hidden');
+  document.body.classList.add('overflow-hidden');
 }
 
 window.addEventListener('keydown', (event) => {
