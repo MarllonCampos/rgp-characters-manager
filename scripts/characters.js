@@ -75,13 +75,33 @@ class Character {
       characterButtonContainer.appendChild(characterIncreasePosition);
       characterButtonContainer.appendChild(characterDecreasePosition);
 
-      const maxAttributes = Object.entries(character.attributes).filter(([key, value], _) => /^max/gi.test(key));
+      const maxAttributes = Object.entries(character.attributes).filter(([key, _value], _) => /^max/gi.test(key));
 
-      console.log(maxAttributes);
-      console.log(character.attributes);
+      const attributesContainer = document.createElement('div');
+      attributesContainer.classList.add('characters__character-container__attributes-container');
+      maxAttributes.forEach(([key, value]) => {
+        const maxAttributeButton = document.createElement('button');
+        maxAttributeButton.setAttribute('type', 'button');
+        maxAttributeButton.setAttribute('value', value);
+        maxAttributeButton.setAttribute('data-aria-attribute', key.toLowerCase());
+        maxAttributeButton.textContent = value;
+        maxAttributeButton.classList.add('characters__character-container__attribute-button');
+
+        const normalAttributeButton = document.createElement('button');
+        normalAttributeButton.setAttribute('type', 'button');
+        normalAttributeButton.setAttribute('value', value);
+        normalAttributeButton.setAttribute('data-aria-attribute', key.replace(/max/g, '').toLowerCase());
+
+        normalAttributeButton.textContent = value;
+        normalAttributeButton.classList.add('characters__character-container__attribute-button');
+
+        attributesContainer.appendChild(maxAttributeButton);
+        attributesContainer.appendChild(normalAttributeButton);
+      });
 
       characterContainer.appendChild(characterButtonContainer);
       characterContainer.appendChild(characterName);
+      characterContainer.appendChild(attributesContainer);
       CHARACTER_SPECIFIC_CONTAINER.appendChild(characterContainer);
     });
   }

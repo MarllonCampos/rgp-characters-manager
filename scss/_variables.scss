@@ -1,9 +1,14 @@
 $text-color: #eee;
 $blue-color: #27354d;
 $light-blue-color: #4c7bcd;
-$tomato-color: #ff8873;
-$accent-tomato-color: #d15f3c;
-
+$tomato-color: #ff6347;
+$accent-tomato-color: #ff2c06;
+$green-color: #ccff33;
+$eingrengrau-color: #16161d;
 .justify-center {
   justify-content: center;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }

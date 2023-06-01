@@ -11,7 +11,7 @@
     margin-bottom: 1.5rem;
   }
   & + & {
-    margin-top: 2.75rem;
+    margin-bottom: 2.75rem;
   }
 
   &__character-container {
@@ -20,7 +20,12 @@
     background-color: $light-blue-color;
     border-radius: 0.5rem;
     height: 12.5rem;
-
+    & + & {
+      margin-top: 1.5rem;
+    }
+    &:last-child {
+      margin-bottom: 2rem;
+    }
     padding: 1.5rem 1rem;
 
     &__image-name-container {
@@ -46,6 +51,36 @@
       text-align: center;
     }
 
+    &__attributes-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 0.5rem;
+      flex: 1;
+    }
+    &__attribute-button {
+      border-radius: 0.5rem;
+      border: 0;
+      font-size: 1.25rem;
+      font-weight: bold;
+      font-family: Special Elite;
+      line-height: 2px;
+
+      &[data-aria-attribute*='hp'] {
+        background-color: $tomato-color;
+        color: $eingrengrau-color;
+      }
+
+      &[data-aria-attribute*='ap'] {
+        background-color: $blue-color;
+        color: white;
+      }
+
+      &[data-aria-attribute*='sanity'] {
+        background-color: $green-color;
+        color: $blue-color;
+      }
+    }
     &__position-container {
       display: flex;
       justify-content: space-between;
