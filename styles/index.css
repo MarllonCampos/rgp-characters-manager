@@ -87,6 +87,7 @@ h6 {
   margin-bottom: 2.75rem;
 }
 .characters__character-container {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -153,17 +154,42 @@ h6 {
   font-family: Special Elite;
   line-height: 2px;
 }
-.characters__character-container__attribute-button[data-aria-attribute*=hp] {
+.characters__character-container__attribute-button[data-attribute*=hp] {
   background-color: #ff6347;
   color: #16161d;
 }
-.characters__character-container__attribute-button[data-aria-attribute*=ap] {
+.characters__character-container__attribute-button[data-attribute*=hp]:active {
+  background-color: #e02200;
+}
+.characters__character-container__attribute-button[data-attribute*=ap] {
   background-color: #27354d;
   color: white;
 }
-.characters__character-container__attribute-button[data-aria-attribute*=sanity] {
+.characters__character-container__attribute-button[data-attribute*=ap]:active {
+  background-color: #050609;
+}
+.characters__character-container__attribute-button[data-attribute*=sanity] {
   background-color: #ccff33;
   color: #27354d;
+}
+.characters__character-container__attribute-button[data-attribute*=sanity]:active {
+  background-color: #99cc00;
+}
+.characters__character-container__delete-character {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 0;
+  aspect-ratio: 1;
+  width: 47px;
+  padding: 0.125rem;
+  background-color: #eee;
+}
+.characters__character-container__delete-character:active {
+  background-color: #27354d;
 }
 .characters__character-container__position-container {
   display: -webkit-box;

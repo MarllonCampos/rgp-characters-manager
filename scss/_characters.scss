@@ -15,6 +15,7 @@
   }
 
   &__character-container {
+    position: relative;
     display: flex;
     gap: 1.5rem;
     background-color: $light-blue-color;
@@ -66,21 +67,55 @@
       font-family: Special Elite;
       line-height: 2px;
 
-      &[data-aria-attribute*='hp'] {
+      &[data-attribute*='hp'] {
+        $back-color: $tomato-color;
+
         background-color: $tomato-color;
         color: $eingrengrau-color;
+        &:active {
+          background-color: darken($back-color, 20%);
+        }
       }
 
-      &[data-aria-attribute*='ap'] {
+      &[data-attribute*='ap'] {
+        $back-color: $blue-color;
         background-color: $blue-color;
         color: white;
+        &:active {
+          background-color: darken($back-color, 20%);
+        }
       }
 
-      &[data-aria-attribute*='sanity'] {
+      &[data-attribute*='sanity'] {
+        $back-color: $green-color;
+
         background-color: $green-color;
         color: $blue-color;
+
+        &:active {
+          background-color: darken($back-color, 20%);
+        }
       }
     }
+
+    &__delete-character {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translate(-50%, -50%);
+
+      border-radius: 50%;
+      border: 0;
+      aspect-ratio: 1;
+      width: 47px;
+      padding: 0.125rem;
+      background-color: $text-color;
+
+      &:active {
+        background-color: $blue-color;
+      }
+    }
+
     &__position-container {
       display: flex;
       justify-content: space-between;
