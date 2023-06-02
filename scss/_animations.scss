@@ -1,21 +1,23 @@
 @keyframes deleteCharacterAnimation {
   0% {
-    transform: skew(0deg, 0deg) rotate(0) scale(1);
     opacity: 1;
   }
 
   100% {
-    transform: skew(30deg, 59deg) rotate(90deg) scale(0.25);
     opacity: 0;
-    visibility: hidden;
+    transform: scaleY(0) translateX(100vw);
+    padding: 0;
+    height: 0;
   }
 }
 
 .deleteCharacterAnimation {
   animation-name: deleteCharacterAnimation;
-  animation-duration: 250ms;
+  animation-duration: 450ms;
   animation-fill-mode: forwards;
   animation-timing-function: linear;
+  transition: all 450ms linear;
+  transform-origin: top center;
 }
 
 @keyframes addCharacterAnimation {
