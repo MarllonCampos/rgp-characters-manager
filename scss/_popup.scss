@@ -138,3 +138,27 @@
     }
   }
 }
+
+@media screen and (max-width: 960px) {
+  .popup {
+    &__input-container {
+      &__group {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 655px) {
+  .popup {
+    &__input-container {
+      &__input {
+        max-width: initial;
+      }
+    }
+  }
+
+  .popup__input-container__group div {
+    max-width: initial;
+  }
+}
