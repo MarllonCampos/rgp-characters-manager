@@ -77,7 +77,22 @@ class Character {
     });
   }
 
-  changePosition(character, number) {}
+  changePosition(character, number) {
+    const formattedNumber = Number(number);
+    const allCharacters = this.findCharacters();
+    const typeCharacters = allCharacters.filter((characterArray) => characterArray.type === character.type);
+    const counterTypeCharacters = allCharacters.filter((characterArray) => characterArray.type !== character.type);
+    const indexOfCharacter = typeCharacters.findIndex(
+      (typeCharacter) => JSON.stringify(typeCharacter) === JSON.stringify(character)
+    );
+    const nextCharacterIndex = indexOfCharacter + formattedNumber;
+    if (nextCharacterIndex + 1 > typeCharacters.length || nextCharacterIndex < 0) return alert('Menor indice possível');
+    const previousCharacter = typeCharacters[nextCharacterIndex];
+    typeCharacters[nextCharacterIndex] = { ...character, index: nextCharacterIndex };
+    typeCharacters[indexOfCharacter] = { ...previousCharacter, index: indexOfCharacter };
+    this.setStorage([...typeCharacters, ...counterTypeCharacters]);
+    this.list();
+  }
 
   list() {
     const allCharacter = this.findCharacters();
@@ -86,7 +101,6 @@ class Character {
     const sortedCharacter = allCharacter.sort(
       (previousCharacter, nextCharacter) => previousCharacter.index - nextCharacter.index
     );
-    console.log(sortedCharacter);
     sortedCharacter.forEach((character) => {
       const CHARACTER_SPECIFIC_CONTAINER =
         character.type === this.characterTypes.MOBS ? this.MONSTERS_CONTAINER : this.CHARACTERS_CONTAINER;
@@ -106,14 +120,23 @@ class Character {
       characterIncreasePosition.classList.add('characters__character-container__increase-position');
       characterIncreasePosition.classList.add('characters__character-container__button');
       characterIncreasePosition.innerHTML = this.INCREASE_ICON;
-      characterIncreasePosition.value = 1;
+      characterIncreasePosition.value = -1;
+      characterIncreasePosition.addEventListener('click', (event) =>
+        this.changePosition(character, event.target.value)
+      );
 
       const characterDecreasePosition = document.createElement('button');
       characterDecreasePosition.classList.add('characters__character-container__button');
       characterDecreasePosition.innerHTML = this.DECREASE_ICON;
-      characterDecreasePosition.value = -1;
+      characterDecreasePosition.value = 1;
+      characterDecreasePosition.addEventListener('click', (event) =>
+        this.changePosition(character, event.target.value)
+      );
+
+      // Append change position buttons to container
       characterButtonContainer.appendChild(characterIncreasePosition);
       characterButtonContainer.appendChild(characterDecreasePosition);
+
       const deleteCharacterButton = document.createElement('button');
       deleteCharacterButton.setAttribute('type', 'button');
       deleteCharacterButton.setAttribute('data-character-index', `${character.type}-${character.index}`);
