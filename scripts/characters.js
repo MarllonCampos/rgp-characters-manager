@@ -12,7 +12,6 @@ class Character {
       PLAYERS: 'player',
     };
     this.CHARACTERS_CONTAINER = document.querySelector('#characters');
-    this.MONSTERS_CONTAINER = document.querySelector('#mobs');
   }
 
   create({ name, type, attributes }) {
@@ -46,15 +45,6 @@ class Character {
     });
   }
 
-  clearListSpecificCharacter(character) {
-    const SPECIFIC_CONTAINER = character
-      .querySelector('button[data-character-index]')
-      .getAttribute('data-character-index')
-      .includes(this.characterTypes.PLAYERS)
-      ? this.CHARACTERS_CONTAINER
-      : this.MONSTERS_CONTAINER;
-    SPECIFIC_CONTAINER.removeChild(character);
-  }
   setStorage(allCharacters) {
     if (!Array.isArray(allCharacters)) return;
     window.localStorage.setItem(this.localStorageKey, JSON.stringify(allCharacters));
@@ -72,7 +62,7 @@ class Character {
       const finalList = allCharacters.filter(
         (character) => JSON.stringify(character) !== JSON.stringify(specificCharacter)
       );
-      this.clearListSpecificCharacter(event.target.parentNode);
+      this.CHARACTERS_CONTAINER.removeChild(event.target.parentNode);
       this.setStorage(finalList);
     });
   }
@@ -102,10 +92,9 @@ class Character {
       (previousCharacter, nextCharacter) => previousCharacter.index - nextCharacter.index
     );
     sortedCharacter.forEach((character) => {
-      const CHARACTER_SPECIFIC_CONTAINER =
-        character.type === this.characterTypes.MOBS ? this.MONSTERS_CONTAINER : this.CHARACTERS_CONTAINER;
       const characterContainer = document.createElement('div');
       characterContainer.classList.add('characters__character-container');
+      characterContainer.setAttribute('data-type', character.type);
 
       // User Name
       const characterName = document.createElement('p');
@@ -172,7 +161,7 @@ class Character {
       characterContainer.appendChild(characterName);
       characterContainer.appendChild(attributesContainer);
       characterContainer.appendChild(deleteCharacterButton);
-      CHARACTER_SPECIFIC_CONTAINER.appendChild(characterContainer);
+      this.CHARACTERS_CONTAINER.appendChild(characterContainer);
     });
   }
 }

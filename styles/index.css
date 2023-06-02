@@ -101,6 +101,9 @@ h6 {
   height: 12.5rem;
   padding: 1.5rem 1rem;
 }
+.characters__character-container[data-type=monster] {
+  background-color: salmon;
+}
 .characters__character-container + .characters__character-container {
   margin-top: 1.5rem;
 }
@@ -151,6 +154,7 @@ h6 {
           flex: 1;
 }
 .characters__character-container__attribute-button {
+  cursor: pointer;
   border-radius: 0.5rem;
   border: 0;
   font-size: 1.25rem;
@@ -162,22 +166,31 @@ h6 {
   background-color: #ff6347;
   color: #16161d;
 }
+.characters__character-container__attribute-button[data-attribute*=hp]:hover {
+  background-color: #ff8e7a;
+}
 .characters__character-container__attribute-button[data-attribute*=hp]:active {
-  background-color: #e02200;
+  background-color: #ff3814;
 }
 .characters__character-container__attribute-button[data-attribute*=ap] {
   background-color: #27354d;
   color: white;
 }
+.characters__character-container__attribute-button[data-attribute*=ap]:hover {
+  background-color: #384c6f;
+}
 .characters__character-container__attribute-button[data-attribute*=ap]:active {
-  background-color: #050609;
+  background-color: #161e2b;
 }
 .characters__character-container__attribute-button[data-attribute*=sanity] {
-  background-color: #ccff33;
+  background-color: #eee;
   color: #27354d;
 }
+.characters__character-container__attribute-button[data-attribute*=sanity]:hover {
+  background-color: white;
+}
 .characters__character-container__attribute-button[data-attribute*=sanity]:active {
-  background-color: #99cc00;
+  background-color: #d5d5d5;
 }
 .characters__character-container__delete-character {
   position: absolute;
@@ -185,12 +198,25 @@ h6 {
   left: 0;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-radius: 50%;
   border: 0;
   aspect-ratio: 1;
   width: 47px;
   padding: 0.125rem;
   background-color: #eee;
+  cursor: pointer;
+}
+.characters__character-container__delete-character:hover {
+  background-color: #bbbbbb;
 }
 .characters__character-container__delete-character:active {
   background-color: #27354d;

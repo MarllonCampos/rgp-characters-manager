@@ -21,13 +21,18 @@
     background-color: $light-blue-color;
     border-radius: 0.5rem;
     height: 12.5rem;
+    padding: 1.5rem 1rem;
+
+    &[data-type='monster'] {
+      background-color: salmon;
+    }
+
     & + & {
       margin-top: 1.5rem;
     }
     &:last-child {
       margin-bottom: 2rem;
     }
-    padding: 1.5rem 1rem;
 
     &__image-name-container {
       display: flex;
@@ -60,6 +65,7 @@
       flex: 1;
     }
     &__attribute-button {
+      cursor: pointer;
       border-radius: 0.5rem;
       border: 0;
       font-size: 1.25rem;
@@ -72,8 +78,11 @@
 
         background-color: $tomato-color;
         color: $eingrengrau-color;
+        &:hover {
+          background-color: lighten($back-color, 10%);
+        }
         &:active {
-          background-color: darken($back-color, 20%);
+          background-color: darken($back-color, 10%);
         }
       }
 
@@ -81,19 +90,26 @@
         $back-color: $blue-color;
         background-color: $blue-color;
         color: white;
+        &:hover {
+          background-color: lighten($back-color, 10%);
+        }
+
         &:active {
-          background-color: darken($back-color, 20%);
+          background-color: darken($back-color, 10%);
         }
       }
 
       &[data-attribute*='sanity'] {
-        $back-color: $green-color;
+        $back-color: $text-color;
 
-        background-color: $green-color;
+        background-color: $back-color;
         color: $blue-color;
 
+        &:hover {
+          background-color: lighten($back-color, 10%);
+        }
         &:active {
-          background-color: darken($back-color, 20%);
+          background-color: darken($back-color, 10%);
         }
       }
     }
@@ -103,6 +119,9 @@
       top: 50%;
       left: 0;
       transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       border-radius: 50%;
       border: 0;
@@ -110,6 +129,11 @@
       width: 47px;
       padding: 0.125rem;
       background-color: $text-color;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($text-color, 20%);
+      }
 
       &:active {
         background-color: $blue-color;
