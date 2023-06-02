@@ -15,6 +15,10 @@
           box-sizing: border-box;
 }
 
+svg {
+  pointer-events: none;
+}
+
 html,
 body {
   min-height: 100%;
@@ -231,7 +235,7 @@ h6 {
 }
 
 .popup {
-  position: absolute;
+  position: fixed;
   z-index: 900;
   inset: 0;
   padding: 3rem 1.5rem;
@@ -377,3 +381,43 @@ h6 {
     top: 0.5rem;
   }
 }
+@-webkit-keyframes deleteCharacterAnimation {
+  0% {
+    -webkit-transform: skew(0deg, 0deg) rotate(0) scale(1);
+            transform: skew(0deg, 0deg) rotate(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: skew(30deg, 59deg) rotate(90deg) scale(0.25);
+            transform: skew(30deg, 59deg) rotate(90deg) scale(0.25);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes deleteCharacterAnimation {
+  0% {
+    -webkit-transform: skew(0deg, 0deg) rotate(0) scale(1);
+            transform: skew(0deg, 0deg) rotate(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: skew(30deg, 59deg) rotate(90deg) scale(0.25);
+            transform: skew(30deg, 59deg) rotate(90deg) scale(0.25);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.deleteCharacterAnimation {
+  -webkit-animation-name: deleteCharacterAnimation;
+          animation-name: deleteCharacterAnimation;
+  -webkit-animation-duration: 250ms;
+          animation-duration: 250ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+@-webkit-keyframes addCharacterAnimation {}
+
+@keyframes addCharacterAnimation {}

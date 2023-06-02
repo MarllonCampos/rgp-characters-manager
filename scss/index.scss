@@ -5,6 +5,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+svg {
+  pointer-events: none;
+}
 html,
 body {
   min-height: 100%;
@@ -56,3 +59,4 @@ h6 {
 
 @import 'characters';
 @import 'popup';
+@import 'animations';
