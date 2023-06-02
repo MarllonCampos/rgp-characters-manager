@@ -18,6 +18,10 @@ function submitForm(event) {
   const type = Array.from(elements.category).find((category) => category.checked).value;
   const attributes = { maxHp: hp, hp, maxAp: ap, ap, maxSanity: sanity, sanity };
   character.create({ name, type, attributes });
+
+  Array.from(elements).forEach((element) => {
+    if (element.tagName.toLowerCase() === 'input' && element.type !== 'radio') element.value = '';
+  });
   closePopUp();
 }
 
@@ -35,5 +39,5 @@ window.addEventListener('keydown', (event) => {
 function closePopUp() {
   const popup = document.querySelector('.popup');
   popup.classList.remove('popup--active');
-  document.body.classList.remove('.overflow-hidden');
+  document.body.classList.remove('overflow-hidden');
 }
