@@ -15,13 +15,16 @@ class Character {
       MOBS: 'monster',
       PLAYERS: 'player',
     };
+    this.CHARACTERS_CONTAINER = document.querySelector('#characters');
+    this.MONSTERS_CONTAINER = document.querySelector('#mobs');
   }
 
   create({ name, type, attributes }) {
     const allCharacters = this.findCharacters();
     const character = { name, type, index: this.countSpecificCharacter(type), attributes };
     allCharacters.push(character);
-    window.localStorage.setItem(this.localStorageKey, JSON.stringify(allCharacters));
+
+    this.setStorage(allCharacters);
     this.list();
   }
 
@@ -31,9 +34,11 @@ class Character {
   }
 
   countSpecificCharacter(type = 'player') {
-    if (/(mob|player)/g.test(type)) return 0;
+    if (/(monster|player)/g.test(type) === false) return 0;
     const allCharacters = this.findCharacters();
-    return allCharacters.filter((character) => character.type === type).length;
+    const filteredCharactersByType = allCharacters.filter((character) => character.type === type);
+
+    return filteredCharactersByType.length;
   }
 
   clearList() {
@@ -44,16 +49,45 @@ class Character {
     });
   }
 
+  clearListSpecificCharacter(character) {
+    const SPECIFIC_CONTAINER = character
+      .querySelector('button[data-character-index]')
+      .getAttribute('data-character-index')
+      .includes(this.characterTypes.PLAYERS)
+      ? this.CHARACTERS_CONTAINER
+      : this.MONSTERS_CONTAINER;
+    SPECIFIC_CONTAINER.removeChild(character);
+  }
+  setStorage(allCharacters) {
+    if (!Array.isArray(allCharacters)) return;
+    window.localStorage.setItem(this.localStorageKey, JSON.stringify(allCharacters));
+  }
+
+  delete(event) {
+    event.target.parentNode.classList.add('deleteCharacterAnimation');
+    const dataAttribute = event.target.getAttribute('data-character-index');
+    const [type, index] = dataAttribute.split('-');
+    const allCharacters = this.findCharacters();
+    const specificCharacter = allCharacters.find((character) => character.type == type && character.index == index);
+    event.target.parentNode.addEventListener('animationend', (parentNode) => {
+      parentNode.target.style.height = '0px';
+      parentNode.target.style.display = 'none';
+      const finalList = allCharacters.filter(
+        (character) => JSON.stringify(character) !== JSON.stringify(specificCharacter)
+      );
+      this.clearListSpecificCharacter(event.target.parentNode);
+      this.setStorage(finalList);
+    });
+  }
+
   list() {
     const allCharacter = this.findCharacters();
     if (allCharacter.length <= 0) return;
     this.clearList();
-    const CHARACTERS_CONTAINER = document.querySelector('#characters');
-    const MONSTERS_CONTAINER = document.querySelector('#mobs');
 
     allCharacter.forEach((character) => {
       const CHARACTER_SPECIFIC_CONTAINER =
-        character.type === this.characterTypes.MOBS ? MONSTERS_CONTAINER : CHARACTERS_CONTAINER;
+        character.type === this.characterTypes.MOBS ? this.MONSTERS_CONTAINER : this.CHARACTERS_CONTAINER;
       const characterContainer = document.createElement('div');
       characterContainer.classList.add('characters__character-container');
 
@@ -76,12 +110,12 @@ class Character {
       characterDecreasePosition.innerHTML = this.DECREASE_ICON;
       characterButtonContainer.appendChild(characterIncreasePosition);
       characterButtonContainer.appendChild(characterDecreasePosition);
-
       const deleteCharacterButton = document.createElement('button');
       deleteCharacterButton.setAttribute('type', 'button');
-      deleteCharacterButton.setAttribute('data-character-index', character.index);
+      deleteCharacterButton.setAttribute('data-character-index', `${character.type}-${character.index}`);
       deleteCharacterButton.classList.add('characters__character-container__delete-character');
       deleteCharacterButton.innerHTML = this.DELETE_ICON;
+      deleteCharacterButton.addEventListener('click', (event) => this.delete(event));
 
       const maxAttributes = Object.entries(character.attributes).filter(([key, _value], _) => /^max/gi.test(key));
 
