@@ -1,8 +1,4 @@
 class Character {
-  // PLUS_ICON = `<svg width="40px" height="40px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title></title> <g id="Complete"> <g data-name="add" id="add-2"> <g> <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="19" y2="5"></line> <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="5" x2="19" y1="12" y2="12"></line> </g> </g> </g> </g></svg>`;
-
-  // MINUS_ICON = `<svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Remove_Minus"> <path id="Vector" d="M6 12H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>`;
-
   DELETE_ICON = `<svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M10 12V17" stroke="#ff2c06" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 12V17" stroke="#ff2c06" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4 7H20" stroke="#ff2c06" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="#ff2c06" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#ff2c06" stroke-width="1.56" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>`;
 
   INCREASE_ICON = `<svg width="22px" height="22px" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" fill="none" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 13l-6-6-6 6"></path> </g></svg>`;
@@ -34,11 +30,12 @@ class Character {
   }
 
   countSpecificCharacter(type = 'player') {
-    if (/(monster|player)/g.test(type) === false) return 0;
-    const allCharacters = this.findCharacters();
-    const filteredCharactersByType = allCharacters.filter((character) => character.type === type);
+    if (/(monster|player)/g.test(type) === false) return Alert('Tipo de monstro não conhecido');
+    const lengthCharacterFromType = Array.from(
+      document.querySelectorAll(`button[data-character-index*='${type}']`)
+    ).length;
 
-    return filteredCharactersByType.length;
+    return lengthCharacterFromType;
   }
 
   clearList() {
@@ -80,12 +77,17 @@ class Character {
     });
   }
 
+  changePosition(character, number) {}
+
   list() {
     const allCharacter = this.findCharacters();
     if (allCharacter.length <= 0) return;
     this.clearList();
-
-    allCharacter.forEach((character) => {
+    const sortedCharacter = allCharacter.sort(
+      (previousCharacter, nextCharacter) => previousCharacter.index - nextCharacter.index
+    );
+    console.log(sortedCharacter);
+    sortedCharacter.forEach((character) => {
       const CHARACTER_SPECIFIC_CONTAINER =
         character.type === this.characterTypes.MOBS ? this.MONSTERS_CONTAINER : this.CHARACTERS_CONTAINER;
       const characterContainer = document.createElement('div');
@@ -104,10 +106,12 @@ class Character {
       characterIncreasePosition.classList.add('characters__character-container__increase-position');
       characterIncreasePosition.classList.add('characters__character-container__button');
       characterIncreasePosition.innerHTML = this.INCREASE_ICON;
+      characterIncreasePosition.value = 1;
 
       const characterDecreasePosition = document.createElement('button');
       characterDecreasePosition.classList.add('characters__character-container__button');
       characterDecreasePosition.innerHTML = this.DECREASE_ICON;
+      characterDecreasePosition.value = -1;
       characterButtonContainer.appendChild(characterIncreasePosition);
       characterButtonContainer.appendChild(characterDecreasePosition);
       const deleteCharacterButton = document.createElement('button');
