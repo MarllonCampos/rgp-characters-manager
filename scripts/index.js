@@ -16,7 +16,7 @@ function submitForm(event) {
   const ap = elements.ap.value;
   const sanity = elements.sanity.value;
   const type = Array.from(elements.category).find((category) => category.checked).value;
-  const attributes = { maxHp: hp, hp, maxAp: ap, ap, maxSanity: sanity, sanity };
+  const attributes = { maxhp: hp, hp, maxap: ap, ap, maxsanity: sanity, sanity };
   character.create({ name, type, attributes });
 
   Array.from(elements).forEach((element) => {

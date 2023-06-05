@@ -16,7 +16,7 @@ class Character {
 
   create({ name, type, attributes }) {
     const allCharacters = this.findCharacters();
-    const character = { name, type, index: this.countSpecificCharacter(type), attributes };
+    const character = { name, type, attributes, id: new Date().valueOf() };
     allCharacters.push(character);
 
     this.setStorage(allCharacters);
@@ -26,15 +26,6 @@ class Character {
   findCharacters() {
     const allCharacters = window.localStorage.getItem(this.localStorageKey);
     return !allCharacters ? [] : JSON.parse(allCharacters);
-  }
-
-  countSpecificCharacter(type = 'player') {
-    if (/(monster|player)/g.test(type) === false) return Alert('Tipo de monstro não conhecido');
-    const lengthCharacterFromType = Array.from(
-      document.querySelectorAll(`button[data-character-index*='${type}']`)
-    ).length;
-
-    return lengthCharacterFromType;
   }
 
   clearList() {
@@ -51,50 +42,89 @@ class Character {
   }
 
   delete(event) {
-    event.target.parentNode.classList.add('deleteCharacterAnimation');
-    const dataAttribute = event.target.getAttribute('data-character-index');
-    const [type, index] = dataAttribute.split('-');
+    const targetParentNode = event.target.parentNode;
+    const targetParentNodeId = targetParentNode.getAttribute('data-id');
+    targetParentNode.classList.add('deleteCharacterAnimation');
     const allCharacters = this.findCharacters();
-    const specificCharacter = allCharacters.find((character) => character.type == type && character.index == index);
-    event.target.parentNode.addEventListener('animationend', (parentNode) => {
+    const finalList = allCharacters.filter((characters) => characters.id != targetParentNodeId);
+    this.setStorage(finalList);
+    targetParentNode.addEventListener('animationend', (parentNode) => {
       parentNode.target.style.height = '0px';
       parentNode.target.style.display = 'none';
-      const finalList = allCharacters.filter(
-        (character) => JSON.stringify(character) !== JSON.stringify(specificCharacter)
-      );
-      this.CHARACTERS_CONTAINER.removeChild(event.target.parentNode);
-      this.setStorage(finalList);
+      this.CHARACTERS_CONTAINER.removeChild(targetParentNode);
     });
+  }
+  indexOfObject(character) {
+    const allCharacters = this.findCharacters();
+    return allCharacters.findIndex((typeCharacter) => String(typeCharacter.id) === String(character.id));
   }
 
   changePosition(character, number) {
     const formattedNumber = Number(number);
     const allCharacters = this.findCharacters();
-    const typeCharacters = allCharacters.filter((characterArray) => characterArray.type === character.type);
-    const counterTypeCharacters = allCharacters.filter((characterArray) => characterArray.type !== character.type);
-    const indexOfCharacter = typeCharacters.findIndex(
-      (typeCharacter) => JSON.stringify(typeCharacter) === JSON.stringify(character)
-    );
+    const indexOfCharacter = this.indexOfObject(character);
     const nextCharacterIndex = indexOfCharacter + formattedNumber;
-    if (nextCharacterIndex + 1 > typeCharacters.length || nextCharacterIndex < 0) return alert('Menor indice possível');
-    const previousCharacter = typeCharacters[nextCharacterIndex];
-    typeCharacters[nextCharacterIndex] = { ...character, index: nextCharacterIndex };
-    typeCharacters[indexOfCharacter] = { ...previousCharacter, index: indexOfCharacter };
-    this.setStorage([...typeCharacters, ...counterTypeCharacters]);
+    if (nextCharacterIndex + 1 > allCharacters.length || nextCharacterIndex < 0) return alert('Menor indice possível');
+    const previousCharacter = allCharacters[nextCharacterIndex];
+    allCharacters[nextCharacterIndex] = character;
+    allCharacters[indexOfCharacter] = previousCharacter;
+    this.setStorage(allCharacters);
     this.list();
   }
 
+  changeAttribute({ attribute, value, id }) {
+    const allCharacters = this.findCharacters();
+
+    const nonMaxAttribute = attribute.replace('max', '').toLowerCase();
+    const isMaxAttribute = /max/gi.test(attribute);
+    const maxAttribute = isMaxAttribute ? attribute : `max${attribute}`;
+
+    const character = allCharacters.find((character) => character.id == id);
+    const characterIndex = this.indexOfObject(character);
+    const characterAttributeValue = Number(character.attributes[nonMaxAttribute]);
+    const maxCharacterAttributeValue = Number(character.attributes[maxAttribute]);
+    const newAttributeValue = String(characterAttributeValue + Number(value));
+    const increaseMaxAttribute = newAttributeValue > maxCharacterAttributeValue;
+    const specificAttributeButton = Array.from(document.querySelectorAll(`button[data-attribute=${nonMaxAttribute}]`))[
+      characterIndex
+    ];
+    const maxAttributeButton = Array.from(document.querySelectorAll(`button[data-attribute=${maxAttribute}]`))[
+      characterIndex
+    ];
+
+    function changeButtonValues(element, value) {
+      element.value = value;
+      element.innerHTML = value;
+    }
+    let newCharacter = { ...character };
+    if (!isMaxAttribute) {
+      changeButtonValues(specificAttributeButton, newAttributeValue);
+      newCharacter.attributes[attribute] = newAttributeValue;
+    }
+    if (increaseMaxAttribute) {
+      changeButtonValues(maxAttributeButton, newAttributeValue);
+      changeButtonValues(specificAttributeButton, newAttributeValue);
+      newCharacter.attributes[attribute] = newAttributeValue;
+      newCharacter.attributes[nonMaxAttribute] = newAttributeValue;
+    }
+    if (!increaseMaxAttribute) {
+      changeButtonValues(specificAttributeButton, newAttributeValue);
+      newCharacter.attributes[nonMaxAttribute] = newAttributeValue;
+    }
+    allCharacters[characterIndex] = newCharacter;
+    this.setStorage(allCharacters);
+  }
+
   list() {
-    const allCharacter = this.findCharacters();
-    if (allCharacter.length <= 0) return;
+    const allCharacters = this.findCharacters();
+    if (allCharacters.length <= 0) return;
     this.clearList();
-    const sortedCharacter = allCharacter.sort(
-      (previousCharacter, nextCharacter) => previousCharacter.index - nextCharacter.index
-    );
-    sortedCharacter.forEach((character) => {
+
+    allCharacters.forEach((character) => {
       const characterContainer = document.createElement('div');
       characterContainer.classList.add('characters__character-container');
       characterContainer.setAttribute('data-type', character.type);
+      characterContainer.setAttribute('data-id', character.id);
 
       // User Name
       const characterName = document.createElement('p');
@@ -128,7 +158,6 @@ class Character {
 
       const deleteCharacterButton = document.createElement('button');
       deleteCharacterButton.setAttribute('type', 'button');
-      deleteCharacterButton.setAttribute('data-character-index', `${character.type}-${character.index}`);
       deleteCharacterButton.classList.add('characters__character-container__delete-character');
       deleteCharacterButton.innerHTML = this.DELETE_ICON;
       deleteCharacterButton.addEventListener('click', (event) => this.delete(event));
@@ -144,17 +173,23 @@ class Character {
         maxAttributeButton.setAttribute('data-attribute', key.toLowerCase());
         maxAttributeButton.textContent = value;
         maxAttributeButton.classList.add('characters__character-container__attribute-button');
+        maxAttributeButton.addEventListener('click', () => {
+          this.changeAttribute({ id: character.id, attribute: key, value: 1 });
+        });
 
         const normalAttributeButton = document.createElement('button');
+        const normalAttribute = key.replace(/max/g, '').toLowerCase();
         normalAttributeButton.setAttribute('type', 'button');
         normalAttributeButton.setAttribute('value', value);
-        normalAttributeButton.setAttribute('data-attribute', key.replace(/max/g, '').toLowerCase());
-
-        normalAttributeButton.textContent = value;
+        normalAttributeButton.setAttribute('data-attribute', normalAttribute);
+        normalAttributeButton.addEventListener('click', () => {
+          this.changeAttribute({ id: character.id, attribute: normalAttribute, value: -1 });
+        });
+        normalAttributeButton.textContent = character.attributes[normalAttribute];
         normalAttributeButton.classList.add('characters__character-container__attribute-button');
 
-        attributesContainer.appendChild(maxAttributeButton);
         attributesContainer.appendChild(normalAttributeButton);
+        attributesContainer.appendChild(maxAttributeButton);
       });
 
       characterContainer.appendChild(characterButtonContainer);
