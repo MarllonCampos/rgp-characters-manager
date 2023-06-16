@@ -366,9 +366,6 @@ h6 {
   margin-left: 0.25rem;
   font-family: "Special Elite";
 }
-.popup__input-container input[type=radio] ~ label {
-  line-height: 4px;
-}
 .popup__input-container__group {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -380,6 +377,15 @@ h6 {
 .popup__input-container__group div {
   max-width: 18.75rem;
   width: 100%;
+}
+.popup__input-container input[type=radio] ~ label {
+  line-height: 4px;
+}
+.popup__input-container:has(input[type=number]) {
+  width: auto;
+}
+.popup__input-container input[type=number] {
+  max-width: 4rem;
 }
 .popup__input-container__input {
   padding: 0.25rem 0.75rem;
@@ -411,7 +417,7 @@ h6 {
     top: 0.5rem;
   }
 }
-@media screen and (max-width: 960px) {
+@media screen and (min-width: 960px) {
   .popup__input-container__group {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -419,8 +425,16 @@ h6 {
   }
 }
 @media screen and (max-width: 655px) {
+  .popup__input-container label {
+    width: 5rem;
+  }
   .popup__input-container__input {
     max-width: initial;
+  }
+  .popup__input-container__group {
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
   .popup__input-container__group div {
     max-width: initial;

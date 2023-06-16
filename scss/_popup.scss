@@ -88,10 +88,6 @@
     }
     margin: 0.75rem 0;
 
-    input[type='radio'] ~ label {
-      line-height: 4px;
-    }
-
     &__group {
       display: flex;
       flex-wrap: wrap;
@@ -102,6 +98,19 @@
         width: 100%;
       }
     }
+
+    input[type='radio'] ~ label {
+      line-height: 4px;
+    }
+
+    &:has(input[type='number']) {
+      width: auto;
+    }
+
+    input[type='number'] {
+      max-width: 4rem;
+    }
+
     &__input {
       padding: 0.25rem 0.75rem;
       font-size: 1rem;
@@ -139,7 +148,7 @@
   }
 }
 
-@media screen and (max-width: 960px) {
+@media screen and (min-width: 960px) {
   .popup {
     &__input-container {
       &__group {
@@ -152,13 +161,20 @@
 @media screen and (max-width: 655px) {
   .popup {
     &__input-container {
+      label {
+        width: 5rem;
+      }
       &__input {
         max-width: initial;
       }
-    }
-  }
 
-  .popup__input-container__group div {
-    max-width: initial;
+      &__group {
+        justify-content: space-between;
+      }
+
+      &__group div {
+        max-width: initial;
+      }
+    }
   }
 }
