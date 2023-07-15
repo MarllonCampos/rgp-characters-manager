@@ -1,4 +1,4 @@
-const character = new Character();
+const character = new CharacterUI();
 
 document.addEventListener('DOMContentLoaded', () => {
   const characterForm = document.getElementById('character-form');
@@ -17,8 +17,9 @@ function submitForm(event) {
   const sanity = elements.sanity.value;
   const type = Array.from(elements.category).find((category) => category.checked).value;
   const attributes = { maxhp: hp, hp, maxap: ap, ap, maxsanity: sanity, sanity };
-  character.create({ name, type, attributes });
-
+  const characterEdit = new CharacterEdit({ name, type, attributes });
+  characterEdit.create();
+  character.list();
   Array.from(elements).forEach((element) => {
     if (element.tagName.toLowerCase() === 'input' && element.type !== 'radio') element.value = '';
   });
