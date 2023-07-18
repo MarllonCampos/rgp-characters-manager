@@ -7,6 +7,7 @@ class CharacterUI {
 
   constructor() {
     this.CHARACTERS_CONTAINER = document.querySelector('#characters');
+    this.actualCharacter = {};
   }
 
   clearList() {
@@ -31,82 +32,108 @@ class CharacterUI {
     });
   }
 
+  createCharacterName = () => {
+    const characterName = document.createElement('p');
+    characterName.classList.add('characters__character-container__name');
+    characterName.innerHTML = this.actualCharacter.name;
+    return characterName;
+  };
+
+  createButtonsContainer = (character) => {
+    const characterButtonContainer = document.createElement('div');
+    characterButtonContainer.classList.add('characters__character-container__position-container');
+
+    const characterIncreasePosition = document.createElement('button');
+    characterIncreasePosition.classList.add('characters__character-container__increase-position');
+    characterIncreasePosition.classList.add('characters__character-container__button');
+    characterIncreasePosition.innerHTML = this.INCREASE_ICON;
+    characterIncreasePosition.value = -1;
+    characterIncreasePosition.addEventListener('click', (event) => {
+      character.changePosition(event.target.value);
+    });
+
+    const characterDecreasePosition = document.createElement('button');
+    characterDecreasePosition.classList.add('characters__character-container__button');
+    characterDecreasePosition.innerHTML = this.DECREASE_ICON;
+    characterDecreasePosition.value = 1;
+    characterDecreasePosition.addEventListener('click', (event) => {
+      character.changePosition(event.target.value);
+    });
+
+    characterButtonContainer.appendChild(characterIncreasePosition);
+    characterButtonContainer.appendChild(characterDecreasePosition);
+
+    return characterButtonContainer;
+  };
+
+  createCharacterDeleteButton = () => {
+    const deleteCharacterButton = document.createElement('button');
+    deleteCharacterButton.setAttribute('type', 'button');
+    deleteCharacterButton.classList.add('characters__character-container__delete-character');
+    deleteCharacterButton.innerHTML = this.DELETE_ICON;
+    deleteCharacterButton.addEventListener('click', (event) => {
+      this.delete(event);
+      this.actualCharacter.delete();
+    });
+
+    return deleteCharacterButton;
+  };
+
+  createCharacterAttributeContainer = (character) => {
+    const maxAttributes = Object.entries(character.attributes).filter(([key, _value], _) => /^max/gi.test(key));
+    const attributesContainer = document.createElement('div');
+    attributesContainer.classList.add('characters__character-container__attributes-container');
+    maxAttributes.forEach(([key, value]) => {
+      const maxAttributeButton = document.createElement('button');
+      maxAttributeButton.setAttribute('type', 'button');
+      maxAttributeButton.setAttribute('value', value);
+      maxAttributeButton.setAttribute('data-attribute', key.toLowerCase());
+      maxAttributeButton.textContent = value;
+      maxAttributeButton.classList.add('characters__character-container__attribute-button');
+      maxAttributeButton.addEventListener('click', () => {
+        character.changeAttribute({ attribute: key, value: 1 });
+      });
+
+      const normalAttributeButton = document.createElement('button');
+      const normalAttribute = key.replace(/max/g, '').toLowerCase();
+      normalAttributeButton.setAttribute('type', 'button');
+      normalAttributeButton.setAttribute('value', value);
+      normalAttributeButton.setAttribute('data-attribute', normalAttribute);
+      normalAttributeButton.addEventListener('click', () => {
+        character.changeAttribute({ attribute: normalAttribute, value: -1 });
+      });
+      normalAttributeButton.textContent = character.attributes[normalAttribute];
+      normalAttributeButton.classList.add('characters__character-container__attribute-button');
+
+      attributesContainer.appendChild(normalAttributeButton);
+      attributesContainer.appendChild(maxAttributeButton);
+    });
+
+    return attributesContainer;
+  };
+
   list() {
     const allCharacters = CharacterEdit.getCharacters();
     if (allCharacters.length <= 0) return;
     this.clearList();
     allCharacters.forEach((character) => {
       const characterEdit = new CharacterEdit(character);
+      this.actualCharacter = characterEdit;
       const characterContainer = document.createElement('div');
       characterContainer.classList.add('characters__character-container');
-      characterContainer.setAttribute('data-type', character.type);
-      characterContainer.setAttribute('data-id', character.id);
+      characterContainer.setAttribute('data-type', characterEdit.type);
+      characterContainer.setAttribute('data-id', characterEdit.id);
 
       // User Name
-      const characterName = document.createElement('p');
-      characterName.classList.add('characters__character-container__name');
-      characterName.innerHTML = character.name;
+      const characterName = this.createCharacterName();
 
       // Position Buttons Container
-      const characterButtonContainer = document.createElement('div');
-      characterButtonContainer.classList.add('characters__character-container__position-container');
+      const characterButtonContainer = this.createButtonsContainer(characterEdit);
 
-      const characterIncreasePosition = document.createElement('button');
-      characterIncreasePosition.classList.add('characters__character-container__increase-position');
-      characterIncreasePosition.classList.add('characters__character-container__button');
-      characterIncreasePosition.innerHTML = this.INCREASE_ICON;
-      characterIncreasePosition.value = -1;
-      characterIncreasePosition.addEventListener('click', (event) => characterEdit.changePosition(event.target.value));
-
-      const characterDecreasePosition = document.createElement('button');
-      characterDecreasePosition.classList.add('characters__character-container__button');
-      characterDecreasePosition.innerHTML = this.DECREASE_ICON;
-      characterDecreasePosition.value = 1;
-      characterDecreasePosition.addEventListener('click', (event) => characterEdit.changePosition(event.target.value));
-
-      // Append change position buttons to container
-      characterButtonContainer.appendChild(characterIncreasePosition);
-      characterButtonContainer.appendChild(characterDecreasePosition);
-
-      const deleteCharacterButton = document.createElement('button');
-      deleteCharacterButton.setAttribute('type', 'button');
-      deleteCharacterButton.classList.add('characters__character-container__delete-character');
-      deleteCharacterButton.innerHTML = this.DELETE_ICON;
-      deleteCharacterButton.addEventListener('click', (event) => {
-        this.delete(event);
-        characterEdit.delete();
-      });
+      const deleteCharacterButton = this.createCharacterDeleteButton();
 
       // Append characters attribute buttons
-      const maxAttributes = Object.entries(character.attributes).filter(([key, _value], _) => /^max/gi.test(key));
-
-      const attributesContainer = document.createElement('div');
-      attributesContainer.classList.add('characters__character-container__attributes-container');
-      maxAttributes.forEach(([key, value]) => {
-        const maxAttributeButton = document.createElement('button');
-        maxAttributeButton.setAttribute('type', 'button');
-        maxAttributeButton.setAttribute('value', value);
-        maxAttributeButton.setAttribute('data-attribute', key.toLowerCase());
-        maxAttributeButton.textContent = value;
-        maxAttributeButton.classList.add('characters__character-container__attribute-button');
-        maxAttributeButton.addEventListener('click', () => {
-          characterEdit.changeAttribute({ attribute: key, value: 1 });
-        });
-
-        const normalAttributeButton = document.createElement('button');
-        const normalAttribute = key.replace(/max/g, '').toLowerCase();
-        normalAttributeButton.setAttribute('type', 'button');
-        normalAttributeButton.setAttribute('value', value);
-        normalAttributeButton.setAttribute('data-attribute', normalAttribute);
-        normalAttributeButton.addEventListener('click', () => {
-          characterEdit.changeAttribute({ attribute: normalAttribute, value: -1 });
-        });
-        normalAttributeButton.textContent = character.attributes[normalAttribute];
-        normalAttributeButton.classList.add('characters__character-container__attribute-button');
-
-        attributesContainer.appendChild(normalAttributeButton);
-        attributesContainer.appendChild(maxAttributeButton);
-      });
+      const attributesContainer = this.createCharacterAttributeContainer(characterEdit);
 
       // Append all buttons and containers to main container
       characterContainer.appendChild(characterButtonContainer);
