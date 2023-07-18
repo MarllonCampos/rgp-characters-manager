@@ -11,6 +11,46 @@ class CharacterEdit {
     return 'x-all-characters';
   }
 
+  get name() {
+    return this.character.name;
+  }
+
+  get id() {
+    return this.character.id;
+  }
+
+  get type() {
+    return this.character.type;
+  }
+
+  get maxHp() {
+    return this.character.attributes.maxHp;
+  }
+
+  get hp() {
+    return this.character.attributes.hp;
+  }
+
+  get maxAp() {
+    return this.character.attributes.maxap;
+  }
+
+  get ap() {
+    return this.character.attributes.ap;
+  }
+
+  get maxSanity() {
+    return this.character.attributes.maxsanity;
+  }
+
+  get sanity() {
+    return this.character.attributes.sanity;
+  }
+
+  get attributes() {
+    return this.character.attributes;
+  }
+
   create() {
     const allCharacters = CharacterEdit.getCharacters();
     allCharacters.push(this.character);
