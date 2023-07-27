@@ -192,6 +192,34 @@ h6 {
 .characters__character-container__attribute-button[data-attribute*=sanity]:active {
   background-color: #d5d5d5;
 }
+.characters__character-container__edit-character {
+  position: absolute;
+  top: 0%;
+  right: calc(-1rem - 20px);
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 50%;
+  border: 0;
+  aspect-ratio: 1;
+  width: 35px;
+  background-color: #ccff33;
+  cursor: pointer;
+}
+.characters__character-container__edit-character:hover {
+  background-color: #99cc00;
+}
+.characters__character-container__edit-character:active {
+  background-color: #27354d;
+}
 .characters__character-container__delete-character {
   position: absolute;
   top: 50%;
