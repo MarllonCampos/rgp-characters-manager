@@ -7,7 +7,6 @@ class CharacterUI {
 
   constructor() {
     this.CHARACTERS_CONTAINER = document.querySelector('#characters');
-    this.actualCharacter = {};
   }
 
   clearList() {
@@ -32,10 +31,10 @@ class CharacterUI {
     });
   }
 
-  createCharacterName = () => {
+  createCharacterName = (character) => {
     const characterName = document.createElement('p');
     characterName.classList.add('characters__character-container__name');
-    characterName.innerHTML = this.actualCharacter.name;
+    characterName.innerHTML = character.name;
     return characterName;
   };
 
@@ -66,14 +65,14 @@ class CharacterUI {
     return characterButtonContainer;
   };
 
-  createCharacterDeleteButton = () => {
+  createCharacterDeleteButton = (character) => {
     const deleteCharacterButton = document.createElement('button');
     deleteCharacterButton.setAttribute('type', 'button');
     deleteCharacterButton.classList.add('characters__character-container__delete-character');
     deleteCharacterButton.innerHTML = this.DELETE_ICON;
     deleteCharacterButton.addEventListener('click', (event) => {
       this.delete(event);
-      this.actualCharacter.delete();
+      character.delete();
     });
 
     return deleteCharacterButton;
@@ -113,27 +112,25 @@ class CharacterUI {
   };
 
   list() {
-    const allCharacters = CharacterEdit.getCharacters();
+    const allCharacters = CharacterEdit.getCharacters().map((character) => new CharacterEdit(character));
     if (allCharacters.length <= 0) return;
     this.clearList();
     allCharacters.forEach((character) => {
-      const characterEdit = new CharacterEdit(character);
-      this.actualCharacter = characterEdit;
       const characterContainer = document.createElement('div');
       characterContainer.classList.add('characters__character-container');
-      characterContainer.setAttribute('data-type', characterEdit.type);
-      characterContainer.setAttribute('data-id', characterEdit.id);
+      characterContainer.setAttribute('data-type', character.type);
+      characterContainer.setAttribute('data-id', character.id);
 
       // User Name
-      const characterName = this.createCharacterName();
+      const characterName = this.createCharacterName(character);
 
       // Position Buttons Container
-      const characterButtonContainer = this.createButtonsContainer(characterEdit);
+      const characterButtonContainer = this.createButtonsContainer(character);
 
-      const deleteCharacterButton = this.createCharacterDeleteButton();
+      const deleteCharacterButton = this.createCharacterDeleteButton(character);
 
       // Append characters attribute buttons
-      const attributesContainer = this.createCharacterAttributeContainer(characterEdit);
+      const attributesContainer = this.createCharacterAttributeContainer(character);
 
       // Append all buttons and containers to main container
       characterContainer.appendChild(characterButtonContainer);
