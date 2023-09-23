@@ -1,12 +1,20 @@
 const character = new CharacterUI();
+const rpgTitle = document.querySelector('.main-container__title');
 
 document.addEventListener('DOMContentLoaded', () => {
   const characterForm = document.getElementById('character-form');
   characterForm.onsubmit = submitForm;
+  const rpgTitle = document.querySelector('.main-container__title');
+  rpgTitle.addEventListener('input', editTitle);
   const addCharacter = document.getElementById('add-character');
   addCharacter.onclick = showPopUp;
   character.list();
+  rpgTitle.textContent = window.localStorage.getItem('x-rpg-title') || 'Nome do RPG';
 });
+
+function editTitle(event) {
+  window.localStorage.setItem('x-rpg-title', event.target.innerText);
+}
 
 function submitForm(event) {
   event.preventDefault();
